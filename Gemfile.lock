@@ -129,6 +129,7 @@ GEM
     nio4r (2.6.1)
     nokogiri (1.15.5-arm64-darwin)
       racc (~> 1.4)
+    prettier_print (1.2.1)
     psych (5.1.1.1)
       stringio
     public_suffix (5.0.4)
@@ -189,6 +190,8 @@ GEM
     stimulus-rails (1.3.0)
       railties (>= 6.0.0)
     stringio (3.0.9)
+    syntax_tree (6.2.0)
+      prettier_print (>= 1.2.0)
     thor (1.3.0)
     timeout (0.4.1)
     turbo-rails (1.5.0)
@@ -225,6 +228,7 @@ DEPENDENCIES
   sprockets-rails
   sqlite3 (~> 1.4)
   stimulus-rails
+  syntax_tree
   turbo-rails
   tzinfo-data
   web-console
