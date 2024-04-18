@@ -5,6 +5,8 @@
       <h3><%= total_gross(movie) %></h3>
       <p>
         <%= truncate(movie.description, length: 40, separator: " ") %>
+        <br />
+        <%= year_of(movie) %>
       </p>
     </div>
   </section>
