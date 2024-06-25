@@ -9,6 +9,7 @@ class MoviesController < ApplicationController
   def show
     @movie = Movie.find(params[:id])
     @fans = @movie.fans
+    @genres = @movie.genres.order(:name)
 
     if current_user
       @favorite = current_user.favorites.find_by(movie_id: @movie.id)
@@ -35,7 +36,7 @@ class MoviesController < ApplicationController
 
   def create
     @movie = Movie.new(movie_params)
-    if @movie.save()
+    if @movie.save
       redirect_to @movie, notice: "Movie successfully created!"
     else
       render :new, status: :unprocessable_entity
@@ -44,11 +45,11 @@ class MoviesController < ApplicationController
 
   def destroy
     @movie = Movie.find(params[:id])
-    @movie.destroy()
+    @movie.destroy
 
     redirect_to movies_url,
-                status: :see_other,
-                alert: "Movie successfully deleted!"
+      status: :see_other,
+      alert: "Movie successfully deleted!"
   end
 
   private
@@ -62,7 +63,8 @@ class MoviesController < ApplicationController
       :total_gross,
       :director,
       :duration,
-      :image_file_name
+      :image_file_name,
+      genre_ids: []
     )
   end
 end

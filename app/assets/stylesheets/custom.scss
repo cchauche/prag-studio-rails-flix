@@ -274,6 +274,91 @@ ul.users {
   }
 }
 
+// Genres Index Page
+
+ul.genres {
+  font-size: 1.25em;
+  list-style: none;
+  padding: 0;
+
+  li {
+    margin: 1em 0;
+  }
+}
+
+// Genre Show Page
+
+section.genre {
+  h2 {
+    font-size: 1.35rem;
+    color: $secondary-text-color;
+  }
+
+  h3 {
+    margin-top: 3rem;
+    font-size: 1.5rem;
+    margin-bottom: 2rem;
+  }
+
+  .actions {
+    margin-top: 1rem;
+
+    .button {
+      @extend .btn, .btn-sm;
+
+      &.edit {
+        @extend .btn-outline-secondary;
+      }
+
+      &.delete {
+        @extend .btn-danger;
+      }
+    }
+  }
+
+  .review {
+    @extend .row;
+    margin: 1rem 0;
+    border-radius: 0.3rem;
+    border: 1px solid $border-color;
+    padding: 1rem;
+
+    .details {
+      @extend .col-md-12, .text-start;
+
+      .title {
+        font-size: 1.15rem;
+        font-weight: 600;
+      }
+
+      .star-rating {
+        margin-bottom: 0.3rem;
+      }
+      .date {
+        font-size: 1rem;
+        font-weight: 400;
+        color: $secondary-text-color;
+      }
+
+      p {
+        margin-top: 1rem;
+      }
+    }
+  }
+
+  .favorite-movies {
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: -1rem;
+
+    img {
+      margin: 1rem;
+      width: 150px;
+      box-shadow: $box-shadow;
+    }
+  }
+}
+
 // User Show Page
 
 section.user {

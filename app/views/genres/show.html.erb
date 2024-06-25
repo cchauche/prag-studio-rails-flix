@@ -1,0 +1,20 @@
+<h1><%= @genre.name %> Genre</h1>
+
+<section class="genre">
+  <div class="actions">
+    <% if current_user_admin? %>
+      <%= link_to "Delete Genre", genre_path(@genre),
+          data: {turbo_method: :delete, turbo_confirm: "Are you sure?"},
+          class: "button delete" %>
+    <% end %>
+  </div>
+
+  <% if @movies.present? %>
+    <h3>Genre Movies</h3>
+    <div class="favorite-movies">
+      <% @movies.each do |movie| %>
+        <%= link_to image_tag(movie.image_file_name), movie %>
+      <% end %>
+    </div>
+  <% end %>
+</section>
