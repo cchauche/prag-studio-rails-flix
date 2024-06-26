@@ -22,21 +22,12 @@ class Movie < ApplicationRecord
 
   validates :rating, inclusion: {in: RATINGS}
 
-  def self.released
-    where("released_on < ?", Time.now).order("released_on desc")
-  end
-
-  def self.hits
-    where("total_gross >= ?", 300_000_000).order(total_gross: :desc)
-  end
-
-  def self.flops
-    where("total_gross < ?", 225_000_000).order(total_gross: :asc)
-  end
-
-  def self.recently_added
-    order(created_at: :desc).limit(3)
-  end
+  scope :released, -> { where("released_on < ?", Time.now).order("released_on desc") }
+  scope :upcoming, -> { where("released_on > ?", Time.now).order("released_on desc") }
+  scope :recent, ->(max = 5) { released.limit(max) }
+  scope :hits, -> { where("total_gross >= ?", 300_000_000).order(total_gross: :desc) }
+  scope :flops, -> { where("total_gross < ?", 225_000_000).order(total_gross: :asc) }
+  scope :recently_added, -> { order(created_at: :desc).limit(3) }
 
   def average_stars
     reviews.average(:stars) || 0.0
