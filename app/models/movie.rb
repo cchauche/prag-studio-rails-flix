@@ -1,4 +1,6 @@
 class Movie < ApplicationRecord
+  before_save :set_slug
+
   has_many :reviews, dependent: :destroy
   has_many :favorites, dependent: :destroy
   has_many :fans, through: :favorites, source: :user
@@ -8,7 +10,9 @@ class Movie < ApplicationRecord
 
   RATINGS = %w[G PG PG-13 R NC-17]
 
-  validates :title, :released_on, :duration, presence: true
+  validates :title, presence: true, uniqueness: {case_sensitive: false}
+
+  validates :released_on, :duration, presence: true
 
   validates :description, length: {minimum: 25}
 
@@ -39,5 +43,15 @@ class Movie < ApplicationRecord
     else
       total_gross.blank? || total_gross < 225_000_000
     end
+  end
+
+  def to_param
+    slug
+  end
+
+  private
+
+  def set_slug
+    self.slug = title.parameterize
   end
 end
