@@ -27,4 +27,8 @@ class User < ApplicationRecord
             length: {
               minimum: 3
             }
+
+  def to_param
+    username
+  end
 end

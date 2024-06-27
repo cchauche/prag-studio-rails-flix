@@ -7,7 +7,7 @@ class GenresController < ApplicationController
   end
 
   def show
-    @genre = Genre.find(params[:id])
+    @genre = Genre.find_by!(slug: params[:id])
     @movies = @genre.movies
   end
 
@@ -25,7 +25,8 @@ class GenresController < ApplicationController
   end
 
   def destroy
-    Genre.destroy(params[:id])
+    genre = Genre.find_by!(slug: params[:id])
+    genre.destroy
     redirect_to genres_url, alert: "Genre deleted!"
   end
 
