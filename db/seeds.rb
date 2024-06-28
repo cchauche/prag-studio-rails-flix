@@ -175,3 +175,67 @@ Movie.create!(
     }
   ]
 )
+
+User.create!(
+  [
+    {
+      name: "Colin",
+      username: "colin",
+      email: "colin@example.com",
+      password: "secret",
+      password_confirmation: "secret",
+      admin: true
+    },
+    {
+      name: "Ben",
+      username: "ben",
+      email: "ben@example.com",
+      password: "secret",
+      password_confirmation: "secret",
+      admin: false
+    },
+    {
+      name: "Viva",
+      username: "viva",
+      email: "viva@example.com",
+      password: "secret",
+      password_confirmation: "secret",
+      admin: false
+    }
+  ]
+)
+
+%w[
+  Action
+  Comedy
+  Drama
+  Romance
+  Thriller
+  Fantasy
+  Documentary
+  Adventure
+  Animation
+  Sci-Fi
+].each { |name| Genre.create!(name: name) }
+
+title_image_name_pairs = [
+  ["Avengers: Endgame", "avengers-end-game.png"],
+  ["Captain Marvel", "captain-marvel.png"],
+  ["Black Panther", "black-panther.png"],
+  ["Avengers: Infinity War", "avengers-infinity-war.png"],
+  ["Green Lantern", "green-lantern.png"],
+  ["Fantastic Four", "fantastic-four.png"],
+  ["Iron Man", "ironman.png"],
+  %w[Superman superman.png],
+  %w[Spider-Man spiderman.png],
+  %w[Batman batman.png],
+  %w[Catwoman catwoman.png],
+  ["Wonder Woman", "wonder-woman.png"],
+  ["In the Heights", "in-the-heights.jpg"]
+]
+
+title_image_name_pairs.each do |movie_title, file_name|
+  movie = Movie.find_by!(title: movie_title)
+  file = File.open(Rails.root.join("app/assets/images/#{file_name}"))
+  movie.main_image.attach(io: file, filename: file_name)
+end
