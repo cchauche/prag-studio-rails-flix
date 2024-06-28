@@ -8,29 +8,29 @@ class Movie < ApplicationRecord
   has_many :characterizations, dependent: :destroy
   has_many :genres, through: :characterizations
 
+  has_one_attached :main_image
+
   RATINGS = %w[G PG PG-13 R NC-17]
 
-  validates :title, presence: true, uniqueness: {case_sensitive: false}
+  validates :title, presence: true, uniqueness: { case_sensitive: false }
 
   validates :released_on, :duration, presence: true
 
-  validates :description, length: {minimum: 25}
+  validates :description, length: { minimum: 25 }
 
-  validates :total_gross, numericality: {greater_than_or_equal_to: 0}
+  validates :total_gross, numericality: { greater_than_or_equal_to: 0 }
 
-  validates :image_file_name,
-    format: {
-      with: /\w+\.(jpg|png)\z/i,
-      message: "must be a JPG or PNG image"
-    }
+  validates :rating, inclusion: { in: RATINGS }
 
-  validates :rating, inclusion: {in: RATINGS}
-
-  scope :released, -> { where("released_on < ?", Time.now).order("released_on desc") }
-  scope :upcoming, -> { where("released_on > ?", Time.now).order("released_on desc") }
+  scope :released,
+        -> { where("released_on < ?", Time.now).order("released_on desc") }
+  scope :upcoming,
+        -> { where("released_on > ?", Time.now).order("released_on desc") }
   scope :recent, ->(max = 5) { released.limit(max) }
-  scope :hits, -> { where("total_gross >= ?", 300_000_000).order(total_gross: :desc) }
-  scope :flops, -> { where("total_gross < ?", 225_000_000).order(total_gross: :asc) }
+  scope :hits,
+        -> { where("total_gross >= ?", 300_000_000).order(total_gross: :desc) }
+  scope :flops,
+        -> { where("total_gross < ?", 225_000_000).order(total_gross: :asc) }
   scope :recently_added, -> { order(created_at: :desc).limit(3) }
 
   def average_stars
